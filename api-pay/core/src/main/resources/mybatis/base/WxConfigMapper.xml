@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kinlie.microservicepay.dao.WxConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.kinlie.microservicepay.pojo.WxConfig" extends="associationMap">
+	<id column="id" property="id" />
+	<result column="mch_id" property="mchId" />
+	<result column="key" property="key" />
+	<result column="cert_string" property="certString" />
+	<result column="app_id" property="appId" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+		`id`
+		,`mch_id`
+		,`key`
+		,`cert_string`
+		,`app_id`
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM `wx_config`
+    WHERE `id` = #{id}
+  </select>
+  <select id="getByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM `wx_config`
+    <include refid="map_params_where_condition" />
+    <if test="orderBy == null" >
+      ORDER BY `id` DESC
+    </if>
+    <if test="orderBy != null and orderBy != 'no'" >
+      ORDER BY ${orderBy}
+    </if>
+	LIMIT 1
+  </select>
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT ${aggregate_sql} FROM `wx_config`
+    <include refid="map_params_where_condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    DELETE FROM `wx_config`
+    WHERE `id` = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.kinlie.microservicepay.pojo.WxConfig" >
+    INSERT INTO `wx_config` (
+	  `id`
+	  ,`mch_id`
+	  ,`key`
+	  ,`cert_string`
+	  ,`app_id`
+      )
+    VALUES (
+		  
+		  #{id}
+		  ,
+		  #{mchId}
+		  ,
+		  #{key}
+		  ,
+		  #{certString}
+		  ,
+		  #{appId}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kinlie.microservicepay.pojo.WxConfig" >
+    INSERT INTO `wx_config`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" >
+			`id`,
+		  </if>
+		  <if test="mchId != null" >
+			`mch_id`,
+		  </if>
+		  <if test="key != null" >
+			`key`,
+		  </if>
+		  <if test="certString != null" >
+			`cert_string`,
+		  </if>
+		  <if test="appId != null" >
+			`app_id`,
+		  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" >
+			#{id},
+		  </if>
+		  <if test="mchId != null" >
+			#{mchId},
+		  </if>
+		  <if test="key != null" >
+			#{key},
+		  </if>
+		  <if test="certString != null" >
+			#{certString},
+		  </if>
+		  <if test="appId != null" >
+			#{appId},
+		  </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinlie.microservicepay.pojo.WxConfig" >
+    UPDATE `wx_config`
+    <set >
+	  <if test="id != null" >
+        `id` = #{id},
+      </if>
+	  <if test="mchId != null" >
+        `mch_id` = #{mchId},
+      </if>
+	  <if test="key != null" >
+        `key` = #{key},
+      </if>
+	  <if test="certString != null" >
+        `cert_string` = #{certString},
+      </if>
+	  <if test="appId != null" >
+        `app_id` = #{appId},
+      </if>
+    </set>
+    WHERE `id` = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinlie.microservicepay.pojo.WxConfig" >
+	UPDATE `wx_config` SET
+        `id` = #{id},
+        `mch_id` = #{mchId},
+        `key` = #{key},
+        `cert_string` = #{certString},
+        `app_id` = #{appId}
+    WHERE `id` = #{id}
+  </update>
+  <update id="updateByCondition" parameterType="java.util.Map" >
+    UPDATE `wx_config`
+    <set>
+	  <if test="entity.id != null" >
+        `id` = #{entity.id},
+      </if>
+	  <if test="entity.mchId != null" >
+        `mch_id` = #{entity.mchId},
+      </if>
+	  <if test="entity.key != null" >
+        `key` = #{entity.key},
+      </if>
+	  <if test="entity.certString != null" >
+        `cert_string` = #{entity.certString},
+      </if>
+	  <if test="entity.appId != null" >
+        `app_id` = #{entity.appId},
+      </if>
+      <foreach collection="entity.nullColums" item="nullColum">
+        `${nullColum}` = NULL,
+      </foreach>
+    </set>
+    <include refid="map_params_where_condition" />
+  </update>
+  <update id="updateIncreateNumbers" parameterType="java.util.Map" >
+    UPDATE `wx_config`
+    <set>
+      <foreach collection="increateNumbers" item="numberCloums">
+        `${numberCloums.column}` = `${numberCloums.column}` + #{numberCloums.number},
+      </foreach>
+    </set>
+    <include refid="map_params_where_condition" />
+  </update>
+  <sql id="map_params_where_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND">
+	  <if test="id != null" >
+        AND `id` = #{id}
+	  </if>
+	  <if test="mchId != null" >
+        AND `mch_id` = #{mchId}
+	  </if>
+	  <if test="key != null" >
+        AND `key` = #{key}
+	  </if>
+	  <if test="certString != null" >
+        AND `cert_string` = #{certString}
+	  </if>
+	  <if test="appId != null" >
+        AND `app_id` = #{appId}
+	  </if>
+	  <if test="condition != null">
+	  <if test="condition.id != null" >
+        AND `id` = #{condition.id}
+	  </if>
+	  <if test="condition.mchId != null" >
+        AND `mch_id` = #{condition.mchId}
+	  </if>
+	  <if test="condition.key != null" >
+        AND `key` = #{condition.key}
+	  </if>
+	  <if test="condition.certString != null" >
+        AND `cert_string` = #{condition.certString}
+	  </if>
+	  <if test="condition.appId != null" >
+        AND `app_id` = #{condition.appId}
+	  </if>
+	  </if>
+	  <if test="vo != null and !vo.expressionChainList.empty">
+        AND
+        <foreach collection="vo.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  `${expression.column}` ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  `${expression.column}` ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  `${expression.column}` ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  `${expression.column}` ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+      <if test="expressionChainList != null and !expressionChainList.empty">
+        AND
+        <foreach collection="expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  `${expression.column}` ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  `${expression.column}` ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  `${expression.column}` ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  `${expression.column}` ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+      <include refid="map_params_where_condition_ext" />
+    </trim>
+  </sql>
+  <select id="getList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `wx_config`
+    <include refid="map_params_where_condition" />
+    <if test="orderBy == null" >
+      ORDER BY `id` DESC
+    </if>
+    <if test="orderBy != null and orderBy != 'no'" >
+      ORDER BY ${orderBy}
+    </if>
+    <if test="pageBeginIndex != null and pageSize != null" >
+      LIMIT #{pageBeginIndex},#{pageSize}
+    </if>
+    <if test="pageBeginIndex == null and pageSize != null" >
+      LIMIT #{pageSize}
+    </if>
+    <if test="pageBeginIndex != null and pageSize == null" >
+      LIMIT #{pageBeginIndex}
+    </if>
+  </select>
+  <delete id="delete" parameterType="java.util.Map" >
+    DELETE
+    FROM `wx_config`
+    <include refid="map_params_where_condition" />
+  </delete>
+  <select id="getCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    SELECT COUNT(1)
+    FROM `wx_config`
+    <include refid="map_params_where_condition" />
+  </select>
+</mapper>
